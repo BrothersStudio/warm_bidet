@@ -12,13 +12,10 @@ public class Countdown : MonoBehaviour
     public float current_alpha;
     public float alpha_reduction_factor;
 
-    void Start()
+    public void Restart()
     {
-        Restart();
-    }
+        gameObject.SetActive(true);
 
-    void Restart()
-    {
         counting = true;
         current_time = starting_time;
         current_alpha = 1;
@@ -27,14 +24,15 @@ public class Countdown : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.anyKeyDown)
-        {
-            counting = false;
-            Debug.Log(current_time);
-        }
-
         if (counting)
         {
+            if (Input.anyKeyDown)
+            {
+                counting = false;
+                Debug.Log(current_time);
+                return;
+            }
+
             current_time -= Time.deltaTime;
             GetComponent<Text>().text = current_time.ToString("00.");
 
